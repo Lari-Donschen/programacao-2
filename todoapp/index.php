@@ -21,16 +21,17 @@
             echo "<table>";
             while ($row = $result->fetch_assoc()) {  
                 $rowid = "'_" . $row["idtodo"] . "'";       
+                $descricao = $row["description"];
                 echo "<tr id = "."_".$row["idtodo"].">"                        
                         . "<td>"
-                        .$row["description"]
+                           . @"<input type='text' class = 'valor-descricao' value = '$descricao'/>"                         
                         . "</td>"
                         . "<td>"
                         . @"<button onclick=removerTodo($rowid)>Remover</button>"
                         ."</td>"
                         . "<td>"
-                        . @"<button onclick=removerTodo($rowid)>Atualizar</button>"
-                        ."</td>"                                             
+                        . @"<button onclick=atualizarTodo($rowid)>Atualizar</button>"
+                        ."</td>"                                            
                     ."</tr>";
             }
             echo "</table>";
