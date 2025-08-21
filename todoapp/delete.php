@@ -4,7 +4,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     $id = $_GET['id'] ?? null;    
     if ($id !== null) {
         $connection = require("dbfactory.php");
-        $sql = @"DELETE FROM Todo WHERE IdTodo = $id"; 
+        $sql = @"DELETE FROM todo WHERE idTodo = $id"; 
         $connection->query($sql);
         $connection -> close();        
     }    

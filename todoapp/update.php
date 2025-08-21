@@ -6,9 +6,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     //captura os dados de entrada da requisição e transforma em objeto no PHP
     $putData = json_decode(file_get_contents('php://input',true));
     $connection = require("dbfactory.php");
-    $id = $putData->id;
-    $descricaoNova = $putData->descricao;
-    $sql = @"update todo set description = '$descricaoNova' where idtodo = $id";
+    $id = $putData->idpessoa;
+    $nomeNovo = $putData->nome;
+    $cpfNovo = $putData->cpf;
+    $enderecoNovo = $putData->endereco;
+    $sql = @"update pessoa set nome = '$nomeNovo', cpf =  '$cpfNovo', endereco = '$enderecoNovo' where idpessoa = $id";    
+    
     if ($connection -> 
         query($sql)) {                 
     }

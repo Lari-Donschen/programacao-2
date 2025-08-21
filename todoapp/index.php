@@ -6,44 +6,56 @@
 </head>
 <body>
     <?php
-        function Salvar($todo){
+        function Salvar($nome, $cpf, $endereco){
             $connection = require("dbfactory.php");                        
             if ($connection -> 
-                query(@"INSERT INTO todo (description) VALUES ('$todo');")) {                 
+                query(@"INSERT INTO pessoa (nome, cpf, endereco) VALUES ('$nome', '$cpf', '$endereco');")) {                 
             }
             $connection -> close();
         }
         function Recuperar(){
             $connection = require("dbfactory.php");
-            $sql = "SELECT idtodo, description FROM todo";
+            $sql = "SELECT idpessoa, nome, cpf, endereco FROM pessoa";
 
             $result = $mysqli->query($sql);
             echo "<table>";
             while ($row = $result->fetch_assoc()) {  
-                $rowid = "'_" . $row["idtodo"] . "'";       
-                $descricao = $row["description"];
-                echo "<tr id = "."_".$row["idtodo"].">"                        
-                        . "<td>"
-                           . @"<input type='text' class = 'valor-descricao' value = '$descricao'/>"                         
+                $rowid = "'_" . $row["idpessoa"] . "'";       
+                $nome = $row["nome"];
+                $cpf = $row["cpf"];
+                $endereco = $row["endereco"];
+                echo "<tr id = "."_".$row["idpessoa"].">"                        
+                         . "<td>"
+                           . @"<input type='text' class = 'valor-nome' value = '$nome'/>"                         
+                        . "</td>"
+                         . "<td>"
+                           . @"<input type='text' class = 'valor-cpf' value = '$cpf'/>"                         
+                        . "</td>"
+                         . "<td>"
+                           . @"<input type='text' class = 'valor-endereco' value = '$endereco'/>"                         
                         . "</td>"
                         . "<td>"
                         . @"<button onclick=removerTodo($rowid)>Remover</button>"
                         ."</td>"
                         . "<td>"
                         . @"<button onclick=atualizarTodo($rowid)>Atualizar</button>"
-                        ."</td>"                                            
+                        ."</td>"                                           
                     ."</tr>";
             }
             echo "</table>";
         }
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $description = htmlspecialchars($_POST['description']); 
-            if(!empty($description)){
-                Salvar($description);
-            }
-            Recuperar();           
+            $nome = htmlspecialchars($_POST['nome']); 
+            $cpf = htmlspecialchars($_POST['cpf']); 
+            $endereco = htmlspecialchars($_POST['endereco']);
+
+            if(!empty($nome && $cpf && $endereco)){
+                Salvar($nome, $cpf, $endereco);
+            }        
         }
+            Recuperar();
+            
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
             Recuperar();        
         }
@@ -53,9 +65,11 @@
         }
     ?>
     <form method="post">
-        <label for="todo-description">Descrição da tarefa:</label>
-        <input name="description" id="todo-description" type="text">
-        <button type="submit">Enviar</button>
+        <label for="pessoa">Cadastros de Pessoas</label>
+        <input name="nome" id="nome" placeholder= "nome" type="text">
+        <input name="cpf" id="cpf" placeholder= "cpf" type="text">
+        <input name="endereco" id = "endereco" placeholder = "endereco" type="text">
+        <button type="submit">Salvar</button>
     </form> 
 </body>
 <script src="/js/index.js"></script>

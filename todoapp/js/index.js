@@ -24,20 +24,24 @@ async function removerBanco(idElemento){
 
 async function atualizarTodo(elemento){
     var elementoAtualizar = document.querySelector("#"+elemento);
-    var descricao = elementoAtualizar.querySelector(".valor-descricao");
-    console.log(descricao.value);
-    await atualizarBanco(elemento.substring(1,elemento.length),descricao.value);
+    var nome = elementoAtualizar.querySelector(".valor-nome");
+    var cpf = elementoAtualizar.querySelector(".valor-cpf");
+    var endereco = elementoAtualizar.querySelector(".valor-endereco");
+    console.log(nome.value,cpf.value,endereco.value);
+    await atualizarBanco(elemento.substring(1,elemento.length),nome.value,cpf.value,endereco.value);
 }
 
-async function atualizarBanco(idElemento, descricao){
+async function atualizarBanco(idPessoa, nome, endereco, cpf){
     await fetch('http://localhost:8080/update.php', {
         method: 'PUT',
         headers: {
             'Content-type': 'application/json; charset=UTF-8',
         },
         body: JSON.stringify({
-            "id":idElemento,
-            "descricao":descricao
+            "id":idPessoa,
+            "nome":nome,
+            "endereco":endereco,
+            "cpf":cpf,
         })
     })
     .then((response) => {
