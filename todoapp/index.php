@@ -6,13 +6,6 @@
 </head>
 <body>
     <?php
-        function Salvar($nome, $cpf, $endereco){
-            $connection = require("dbfactory.php");                        
-            if ($connection -> 
-                query(@"INSERT INTO pessoa (nome, cpf, endereco) VALUES ('$nome', '$cpf', '$endereco');")) {                 
-            }
-            $connection -> close();
-        }
         function Recuperar(){
             $connection = require("dbfactory.php");
             $sql = "SELECT idpessoa, nome, cpf, endereco FROM pessoa";
@@ -44,32 +37,15 @@
             }
             echo "</table>";
         }
-
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $nome = htmlspecialchars($_POST['nome']); 
-            $cpf = htmlspecialchars($_POST['cpf']); 
-            $endereco = htmlspecialchars($_POST['endereco']);
-
-            if(!empty($nome && $cpf && $endereco)){
-                Salvar($nome, $cpf, $endereco);
-            }        
-        }
-            Recuperar();
             
-        if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            Recuperar();        
-        }
-        if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
-            $idRemover = $_GET['id']; 
-            echo "Pegou: ". $idRemover;           
-        }
+        Recuperar();
     ?>
     <form method="post">
         <label for="pessoa">Cadastros de Pessoas</label>
         <input name="nome" id="nome" placeholder= "nome" type="text">
         <input name="cpf" id="cpf" placeholder= "cpf" type="text">
         <input name="endereco" id = "endereco" placeholder = "endereco" type="text">
-        <button type="submit">Salvar</button>
+        <button type="submit">Enviar</button>
     </form> 
 </body>
 <script src="/js/index.js"></script>

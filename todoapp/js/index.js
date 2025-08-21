@@ -55,5 +55,41 @@ async function atualizarBanco(idPessoa, nome, endereco, cpf){
     })
     .catch((error) => {
         console.error('Fetch error:', error);
-    });  
+    }); 
+
+}
+async function salvarTodo(elemento){
+    var nome = elemento.querySelector(".valor-nome");
+    var cpf = elemento.querySelector(".valor-cpf");
+    var endereco = elemento.querySelector(".valor-endereco");
+    console.log(nome.value,cpf.value,endereco.value);
+    await atualizarBanco(elemento.substring(1,elemento.length),nome.value,cpf.value,endereco.value);
+
+}
+
+async function salvarBanco(nome, endereco, cpf){
+    await fetch('http://localhost:8080/save.php', {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({
+            "nome":nome,
+            "endereco":endereco,
+            "cpf":cpf,
+        })
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        console.log(response.json());
+    })
+    .then((data) => {
+        console.log('Data fetched:', data);
+    })
+    .catch((error) => {
+        console.error('Fetch error:', error);
+    }); 
+
 }
