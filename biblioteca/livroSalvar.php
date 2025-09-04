@@ -4,19 +4,19 @@ header('Content-Type: application/json');
 function Salvar($descricao, $titulo, $autor){
             $connection = require("dbfactory.php");                        
             if ($connection -> 
-                query(@"INSERT INTO pessoa (descricao, titulo, autor) VALUES ('$nome', '$cpf', '$endereco');")) {                 
+                query(@"INSERT INTO livro (descricao, titulo, autor) VALUES ('$descricao', '$titulo', '$autor');")) {                 
             }
             $connection -> close();
         }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $putData = json_decode(file_get_contents('php://input',true));
-            $nome = htmlspecialchars($_POST['nome']); 
-            $cpf = htmlspecialchars($_POST['cpf']); 
-            $endereco = htmlspecialchars($_POST['endereco']);
+            $descricao = htmlspecialchars($_POST['descricao']); 
+            $titulo = htmlspecialchars($_POST['titulo']); 
+            $autor = htmlspecialchars($_POST['autor']);
 
-            if(!empty($nome && $cpf && $endereco)){
-                Salvar($nome, $cpf, $endereco);
+            if(!empty($descricao && $titulo && $autor)){
+                Salvar($descricao, $titulo, $autor);
             }        
         }
 else {
