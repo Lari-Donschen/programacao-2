@@ -31,7 +31,7 @@
                         . @"<button onclick=removerLivro($rowid)>Remover</button>"
                         ."</td>"
                         . "<td>"
-                        . @"<button onclick=atualizarAtualizar($rowid)>Atualizar</button>"
+                        . @"<button onclick=atualizarLivro($rowid)>Atualizar</button>"
                         ."</td>"                                           
                     ."</tr>";
             }
@@ -43,7 +43,7 @@
     <form method="post" id= "form-livro">
         <label for="Livro">Cadastros de Livros</label>
         <input name="descricao" id="descricao" placeholder= "descricao" type="text">
-        <input name="titulo" id="cpf" placeholder= "titulo" type="titulo">
+        <input name="titulo" id="titulo" placeholder= "titulo" type="text">
         <input name="autor" id = "autor" placeholder = "autor" type="text">
         <button type="submit">Gravar</button>
     </form> 

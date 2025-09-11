@@ -1,10 +1,4 @@
-document.querySelector("#Livro").addEventListener("click", function(){
-    window.location.href = "./livro.php";
-});
 
-document.querySelector("#Local").addEventListener("click", function(){
-    window.location.href = "./local.php";
-});
 
 //Funções de Livro
 async function removerLivro (elemento){    
@@ -40,7 +34,7 @@ async function atualizarLivro(elemento){
     await atualizarLivroBanco(elemento.substring(1,elemento.length),nome.value,cep.value,endereco.value);
 }
 
-async function atualizarLivroBanco(id, nome, endereco, cep){
+async function atualizarLivroBanco(id, descricao, titulo, autor){
     await fetch('http://localhost:8080/livroAtualizar.php', {
         method: 'PUT',
         headers: {
@@ -48,9 +42,9 @@ async function atualizarLivroBanco(id, nome, endereco, cep){
         },
         body: JSON.stringify({
             "id":id,
-            "nome":nome,
-            "endereco":endereco,
-            "cep":cep,
+            "descricao":descricao,
+            "titulo":titulo,
+            "autor":autor,
         })
     })
     .then((response) => {
@@ -121,7 +115,7 @@ formElement.addEventListener('submit', async function(event) {
     console.log(formData.get("descricao", "titulo", "autor"));
 
     //segue para enviar para o back-end
-    await salvarTodo(formData.get("descricao", "titulo", "autor"));
+    await salvarLivro(formData.get("descricao", "titulo", "autor"));
 });
 
 const formElementt = document.querySelector('#form-local'); 
@@ -139,7 +133,7 @@ formElementt.addEventListener('submit', async function(event) {
     console.log(formData.get("nome", "cep", "endereco"));
 
     //segue para enviar para o back-end
-    await salvarTodo(formData.get("nome", "cep", "endereco"));
+    await salvarLocal(formData.get("nome", "cep", "endereco"));
 });
 
 
