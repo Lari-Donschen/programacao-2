@@ -10,7 +10,7 @@
             $connection = require("dbfactory.php");
             $sql = "SELECT id, descricao, titulo, autor FROM livro";
 
-            $result = $mysqli->query($sql);
+            $result = $connection->query($sql);
             echo "<table>";
             while ($row = $result->fetch_assoc()) {  
                 $rowid = "'_" . $row["id"] . "'";       
@@ -19,19 +19,19 @@
                 $autor = $row["autor"];
                 echo "<tr id = "."_".$row["id"].">"                        
                          . "<td>"
-                           . @"<input type='text' class = 'valor-descricao' value = '$descricao'/>"                         
+                           . "<input type='text' class = 'valor-descricao' value = '$descricao'/>"                         
                         . "</td>"
                          . "<td>"
-                           . @"<input type='text' class = 'valor-titulo' value = '$titulo'/>"                         
+                           . "<input type='text' class = 'valor-titulo' value = '$titulo'/>"                         
                         . "</td>"
                          . "<td>"
-                           . @"<input type='text' class = 'valor-autor' value = '$autor'/>"                         
+                           . "<input type='text' class = 'valor-autor' value = '$autor'/>"                         
                         . "</td>"
                         . "<td>"
-                        . @"<button onclick=removerLivro($rowid)>Remover</button>"
+                        . "<button onclick=removerLivro($rowid)>Remover</button>"
                         ."</td>"
                         . "<td>"
-                        . @"<button onclick=atualizarLivro($rowid)>Atualizar</button>"
+                        . "<button onclick=atualizarLivro($rowid)>Atualizar</button>"
                         ."</td>"                                           
                     ."</tr>";
             }

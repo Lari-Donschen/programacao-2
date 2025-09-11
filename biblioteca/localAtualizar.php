@@ -4,16 +4,14 @@ header('Content-Type: application/json');
 if ($_SERVER['REQUEST_METHOD'] === 'PUT') {   
     $connection = require("dbfactory.php");
     //captura os dados de entrada da requisição e transforma em objeto no PHP
-    $putData = json_decode(file_get_contents('php://input',true));
-    $connection = require("dbfactory.php");
+    $putData = json_decode(file_get_contents('php://input', true));
     $id = $putData->id;
     $nomeNovo = $putData->nome;
     $cepNovo = $putData->cep;
     $enderecoNovo = $putData->endereco;
-    $sql = @"update local set nome = '$nomeNovo', cep =  '$cepNovo', endereco = '$enderecoNovo' where id = $id";    
+    $sql = "update local set nome = '$nomeNovo', cep = '$cepNovo', endereco = '$enderecoNovo' where id = $id";    
     
-    if ($connection -> 
-        query($sql)) {                 
+    if ($connection -> query($sql)) {                 
     }
     $connection -> close();
     //depois de executar a operação, retorna o json enviado    

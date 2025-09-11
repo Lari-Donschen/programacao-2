@@ -1,5 +1,3 @@
-
-
 //Funções de Livro
 async function removerLivro (elemento){    
     var elementoRemover = document.querySelector("#"+elemento);
@@ -27,11 +25,11 @@ async function removerLivroBanco(idElemento){
 
 async function atualizarLivro(elemento){
     var elementoAtualizar = document.querySelector("#"+elemento);
-    var nome = elementoAtualizar.querySelector(".valor-nome");
-    var cep = elementoAtualizar.querySelector(".valor-cep");
-    var endereco = elementoAtualizar.querySelector(".valor-endereco");
-    console.log(nome.value,cep.value,endereco.value);
-    await atualizarLivroBanco(elemento.substring(1,elemento.length),nome.value,cep.value,endereco.value);
+    var descricao = elementoAtualizar.querySelector(".valor-descricao");
+    var titulo = elementoAtualizar.querySelector(".valor-titulo");
+    var autor = elementoAtualizar.querySelector(".valor-autor");
+    console.log(descricao.value, titulo.value, autor.value);
+    await atualizarLivroBanco(elemento.substring(1,elemento.length), descricao.value, titulo.value, autor.value);
 }
 
 async function atualizarLivroBanco(id, descricao, titulo, autor){
@@ -59,7 +57,6 @@ async function atualizarLivroBanco(id, descricao, titulo, autor){
     .catch((error) => {
         console.error('Fetch error:', error);
     }); 
-
 }
 
 async function salvarLivro(descricao, titulo, autor){
@@ -92,50 +89,61 @@ function validarFormulario(form){
     var camposInvalidos = [];
      for (let i = 0; i < form.target.elements.length; i++) {
         const element = form.target.elements[i];
-        if (element.name && element.value) {
-            if(element.value == null || element.value == undefined || element.value == null)
+        if (element.name && element.type !== 'submit') {
+            if(element.value == null || element.value == undefined || element.value == '')
                 camposInvalidos.push(element.name);
         }
     }
     return camposInvalidos;
 }
 
-const formElement = document.querySelector('#form-livro'); 
-formElement.addEventListener('submit', async function(event) {
-    // Prevent the default form submission
-    event.preventDefault();
-    const formData = new FormData(event.target); // event.target refers to the form
-    var erros = validarFormulario(event);    
-    if(erros.length > 0){
-        alert(erros);
-        //se o formulário não for válido, irá parar a operação por aqui e mostrar os 
-        //campos pendentes de preenchimento
-        return;
-    } 
-    console.log(formData.get("descricao", "titulo", "autor"));
+// Event listener para formulário de livro
+if (document.querySelector('#form-livro')) {
+    const formElement = document.querySelector('#form-livro'); 
+    formElement.addEventListener('submit', async function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+        const formData = new FormData(event.target); // event.target refers to the form
+        var erros = validarFormulario(event);    
+        if(erros.length > 0){
+            alert("Campos obrigatórios não preenchidos: " + erros.join(", "));
+            return;
+        } 
+        
+        const descricao = formData.get("descricao");
+        const titulo = formData.get("titulo");
+        const autor = formData.get("autor");
+        
+        console.log(descricao, titulo, autor);
 
-    //segue para enviar para o back-end
-    await salvarLivro(formData.get("descricao", "titulo", "autor"));
-});
+        //segue para enviar para o back-end
+        await salvarLivro(descricao, titulo, autor);
+    });
+}
 
-const formElementt = document.querySelector('#form-local'); 
-formElementt.addEventListener('submit', async function(event) {
-    // Prevent the default form submission
-    event.preventDefault();
-    const formData = new FormData(event.target); // event.target refers to the form
-    var erros = validarFormulario(event);    
-    if(erros.length > 0){
-        alert(erros);
-        //se o formulário não for válido, irá parar a operação por aqui e mostrar os 
-        //campos pendentes de preenchimento
-        return;
-    } 
-    console.log(formData.get("nome", "cep", "endereco"));
+// Event listener para formulário de local
+if (document.querySelector('#form-local')) {
+    const formElementt = document.querySelector('#form-local'); 
+    formElementt.addEventListener('submit', async function(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+        const formData = new FormData(event.target); // event.target refers to the form
+        var erros = validarFormulario(event);    
+        if(erros.length > 0){
+            alert("Campos obrigatórios não preenchidos: " + erros.join(", "));
+            return;
+        } 
+        
+        const nome = formData.get("nome");
+        const cep = formData.get("cep");
+        const endereco = formData.get("endereco");
+        
+        console.log(nome, cep, endereco);
 
-    //segue para enviar para o back-end
-    await salvarLocal(formData.get("nome", "cep", "endereco"));
-});
-
+        //segue para enviar para o back-end
+        await salvarLocal(nome, cep, endereco);
+    });
+}
 
 //Funções do Local
 async function removerLocal (elemento){    
@@ -171,7 +179,7 @@ async function atualizarLocal(elemento){
     await atualizarLocalBanco(elemento.substring(1,elemento.length),nome.value,cep.value,endereco.value);
 }
 
-async function atualizarLocalBanco(id, nome, endereco, cep){
+async function atualizarLocalBanco(id, nome, cep, endereco){
     await fetch('http://localhost:8080/localAtualizar.php', {
         method: 'PUT',
         headers: {
@@ -180,8 +188,8 @@ async function atualizarLocalBanco(id, nome, endereco, cep){
         body: JSON.stringify({
             "id":id,
             "nome":nome,
-            "endereco":endereco,
             "cep":cep,
+            "endereco":endereco,
         })
     })
     .then((response) => {
@@ -196,7 +204,6 @@ async function atualizarLocalBanco(id, nome, endereco, cep){
     .catch((error) => {
         console.error('Fetch error:', error);
     }); 
-
 }
 
 async function salvarLocal(nome, cep, endereco){
@@ -207,8 +214,8 @@ async function salvarLocal(nome, cep, endereco){
         },
         body: JSON.stringify({
             "nome":nome,
-            "endereco":endereco,
             "cep":cep,
+            "endereco":endereco,
         })
     })
     .then((response) => {
@@ -223,7 +230,6 @@ async function salvarLocal(nome, cep, endereco){
     .catch((error) => {
         console.error('Fetch error:', error);
     }); 
-
 }
 
 async function salvarItem(localId, livroId, dataEntrada){
@@ -250,5 +256,4 @@ async function salvarItem(localId, livroId, dataEntrada){
     .catch((error) => {
         console.error('Fetch error:', error);
     }); 
-
 }
