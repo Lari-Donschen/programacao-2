@@ -11,9 +11,13 @@ function Salvar($nome, $cep, $endereco){
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $postData = json_decode(file_get_contents('php://input',true));
-    if(!empty($postData->nome)  && !empty($postData->$cep) && !empty($postData->$endereco)){
-        Salvar($postData->nome, $postData->$cep, $postData->$endereco);
-    }        
+            $nome = htmlspecialchars($_POST['nome']); 
+            $cep = htmlspecialchars($_POST['cep']); 
+            $endereco = htmlspecialchars($_POST['endereco']);
+
+            if(!empty($nome && $cep && $endereco)){
+                Salvar($nome, $cep, $endereco);
+            }       
 }
 else {
     $response['body'] = json_encode([

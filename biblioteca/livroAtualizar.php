@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
     $descricaoNovo = $putData->descricao;
     $tituloNovo = $putData->titulo;
     $autorNovo = $putData->autor;
-    $sql = @"update livro set descricao = '$descricaoNovo', titulo =  '$tituloNovo', autor = '$autorNovo' where id = $id";    
+    $sql = @"update livro set titulo =  '$tituloNovo', autor = '$autorNovo', descricao = '$descricaoNovo' where id = $id";    
     
     if ($connection -> 
         query($sql)) {                 
