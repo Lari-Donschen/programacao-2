@@ -5,11 +5,11 @@
     <title>Formulário</title>
 </head>
 <body>
-    <button>
-        <a href="livro.php"></a>
+    <button id = "Livro">
+        <a href="livro.php">Livro</a>
     </button>
-    <button>
-        <a href="local.php"></a>
+    <button id = "Local">
+        <a href="local.php">Local</a>
     </button>
 </body>
 <script src="/js/index.js"></script>
