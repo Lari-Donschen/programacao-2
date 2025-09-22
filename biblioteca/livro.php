@@ -2,51 +2,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário</title>
+    <title>Formulário de Livros</title>
 </head>
 <body>
-    <?php
-        function Recuperar(){
-            $connection = require("dbfactory.php");
-            $sql = "SELECT id, descricao, titulo, autor FROM livro";
-
-            $result = $connection->query($sql);
-            echo "<table>";
-            while ($row = $result->fetch_assoc()) {  
-                $rowid = "'_" . $row["id"] . "'";       
-                $descricao = $row["descricao"];
-                $titulo = $row["titulo"];
-                $autor = $row["autor"];
-                echo "<tr id = "."_".$row["id"].">"                        
-                         . "<td>"
-                           . "<input type='text' class = 'valor-descricao' value = '$descricao'/>"                         
-                        . "</td>"
-                         . "<td>"
-                           . "<input type='text' class = 'valor-titulo' value = '$titulo'/>"                         
-                        . "</td>"
-                         . "<td>"
-                           . "<input type='text' class = 'valor-autor' value = '$autor'/>"                         
-                        . "</td>"
-                        . "<td>"
-                        . "<button onclick=removerLivro($rowid)>Remover</button>"
-                        ."</td>"
-                        . "<td>"
-                        . "<button onclick=atualizarLivro($rowid)>Atualizar</button>"
-                        ."</td>"                                           
-                    ."</tr>";
-            }
-            echo "</table>";
-        }
-            
-        Recuperar();
-    ?>
-    <form method="post" id= "form-livro">
+    <h1>Gerenciamento de Livros</h1>
+    
+    <!-- Tabela será renderizada aqui pelo JavaScript -->
+    <div id="livrosContainer">
+        <table id="livrosTable">
+            <thead>
+                <tr>
+                    <th>Descrição</th>
+                    <th>Título</th>
+                    <th>Autor</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="livrosTableBody">
+                <!-- Os dados serão inseridos aqui via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    
+    <form method="post" id="form-livro">
         <label for="Livro">Cadastros de Livros</label>
-        <input name="descricao" id="descricao" placeholder= "descricao" type="text">
-        <input name="titulo" id="titulo" placeholder= "titulo" type="text">
-        <input name="autor" id = "autor" placeholder = "autor" type="text">
+        <input name="descricao" id="descricao" placeholder="descrição" type="text" required>
+        <input name="titulo" id="titulo" placeholder="título" type="text" required>
+        <input name="autor" id="autor" placeholder="autor" type="text" required>
         <button type="submit">Gravar</button>
-    </form> 
+    </form>
+    
+    <div>
+        <a href="index.php">Voltar ao Menu</a>
+    </div>
 </body>
 <script src="/js/index.js"></script>
 </html>

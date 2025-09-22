@@ -2,51 +2,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário</title>
+    <title>Formulário de Locais</title>
 </head>
 <body>
-    <?php
-        function Recuperar(){
-            $connection = require("dbfactory.php");
-            $sql = "SELECT id, nome, cep, endereco FROM local";
-
-            $result = $mysqli->query($sql);
-            echo "<table>";
-            while ($row = $result->fetch_assoc()) {  
-                $rowid = "'_" . $row["id"] . "'";       
-                $nome = $row["nome"];
-                $cep = $row["cep"];
-                $endereco = $row["endereco"];
-                echo "<tr id = "."_".$row["id"].">"                        
-                         . "<td>"
-                           . @"<input type='text' class = 'valor-nome' value = '$nome'/>"                         
-                        . "</td>"
-                         . "<td>"
-                           . @"<input type='text' class = 'valor-cep' value = '$cep'/>"                         
-                        . "</td>"
-                         . "<td>"
-                           . @"<input type='text' class = 'valor-endereco' value = '$endereco'/>"                         
-                        . "</td>"
-                        . "<td>"
-                        . @"<button onclick=removerLocal($rowid)>Remover</button>"
-                        ."</td>"
-                        . "<td>"
-                        . @"<button onclick=atualizarLocal($rowid)>Atualizar</button>"
-                        ."</td>"                                           
-                    ."</tr>";
-            }
-            echo "</table>";
-        }
-            
-        Recuperar();
-    ?>
-    <form method="post" id= "form-local">
+    <h1>Gerenciamento de Locais</h1>
+    
+    <!-- Tabela será renderizada aqui pelo JavaScript -->
+    <div id="locaisContainer">
+        <table id="locaisTable">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CEP</th>
+                    <th>Endereço</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="locaisTableBody">
+                <!-- Os dados serão inseridos aqui via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    
+    <form method="post" id="form-local">
         <label for="local">Cadastros de Local</label>
-        <input name="nome" id="nome" placeholder= "nome" type="text">
-        <input name="cep" id="cep" placeholder= "cep" type="text">
-        <input name="endereco" id = "endereco" placeholder = "endereco" type="text">
+        <input name="nome" id="nome" placeholder="nome" type="text" required>
+        <input name="cep" id="cep" placeholder="cep" type="text" required>
+        <input name="endereco" id="endereco" placeholder="endereço" type="text" required>
         <button type="submit">Gravar</button>
-    </form> 
+    </form>
+    
+    <div>
+        <a href="index.php">Voltar ao Menu</a>
+    </div>
 </body>
 <script src="/js/index.js"></script>
 </html>
